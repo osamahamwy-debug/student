@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="assets/pages.css" />
 <style>
   #appShell{display:none}
-  .pg{display:none}
-  .pg.active{display:block;animation:fade .18s ease}
+  .pg{display:none}.pg.active{display:block;animation:fade .18s ease}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   .nav a{cursor:pointer}
   table.tbl{width:100%;border-collapse:collapse;font-size:.86rem}
@@ -20,23 +19,140 @@
   .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700}
   .av2{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--green-l),var(--green));color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;margin-inline-end:8px}
   .cellname{display:flex;align-items:center}
-  .iconbtn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted)}
-  .iconbtn:hover{color:var(--green);border-color:var(--green-l)}
-  .iconbtn.danger:hover{color:#c0432e;border-color:#e6a99e}
   .rowacts{display:flex;gap:6px}
-  .connbar{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;margin-bottom:14px;font-size:.82rem;font-weight:700}
-  .connbar.live{background:rgba(28,114,147,.10);color:#1c7293;border:1px solid rgba(28,114,147,.28)}
-  .connbar.demo{background:rgba(212,163,115,.14);color:#b07a44;border:1px solid rgba(212,163,115,.38)}
-  .connbar svg{width:15px;height:15px;flex:none}
-  .empty{text-align:center;color:var(--muted);padding:44px 16px}
-  .empty svg{width:34px;height:34px;opacity:.45}
-  .backdrop{position:fixed;inset:0;background:rgba(11,19,43,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
-  .modalcard{background:var(--card);color:var(--ink);border-radius:16px;width:min(560px,100%);max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-  .modalhd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);font-size:1rem}
-  .modalbody{padding:16px 18px;overflow:auto}
+  .iconbtn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted)}
+  .iconbtn:hover{color:var(--green);border-color:var(--green-l)} .iconbtn.danger:hover{color:#c0432e;border-color:#e6a99e}
+  .iconbtn svg{width:15px;height:15px}
+  .connbar{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;margin-bottom:14px;font-size:.82rem;font-weight:700;background:rgba(28,114,147,.10);color:#1c7293;border:1px solid rgba(28,114,147,.28)}
+  .connbar svg{width:15px;height:15px}
+  .empty{text-align:center;color:var(--muted);padding:42px 16px}.empty svg{width:32px;height:32px;opacity:.45}
+  .pager2{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .pgi{color:var(--muted);font-size:.82rem}.pgb{display:flex;gap:6px;flex-wrap:wrap}
+  .pgn,.pgx{min-width:36px;height:36px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;font-family:inherit;font-weight:700;font-size:.84rem;cursor:pointer;padding:0 10px}
+  .pgn.active{background:var(--green);border-color:var(--green);color:#fff}.pgx:disabled{opacity:.45}
+  .backdrop{position:fixed;inset:0;background:rgba(11,19,43,.45);display:none;align-items:center;justify-content:center;z-index:200;padding:18px}
+  .modalcard{background:var(--card);color:var(--ink);border-radius:16px;width:min(600px,100%);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modalhd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);font-weight:700}
+  .modalbody{padding:16px 18px;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+  .modalbody .full{grid-column:1/-1}
   .modalft{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
-  .mlbl{display:block;margin:10px 0 5px;color:var(--muted);font-size:.8rem;font-weight:700}
-  .minp{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-family:var(--font)}
+  .fld label{display:block;font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:5px}
+  .fld input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-family:var(--font)}
+  .sk{height:46px;border-radius:10px;margin:8px 0;background:linear-gradient(90deg,#eef1f6 25%,#e2e7ef 37%,#eef1f6 63%);background-size:400% 100%;animation:shm 1.3s ease infinite}
+  @keyframes shm{0%{background-position:100% 0}100%{background-position:-100% 0}}
+  @media(max-width:560px){.modalbody{grid-template-columns:1fr}}
+</style>
+<!-- ====== خطوط + تحوّل بصري (Neon / Glassmorphism) — طبقة عرض فقط ====== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="neon-overhaul">
+:root{
+  --green:#22d3ee; --green-l:#43e7db; --green-d:#0ea5b7; --gold:#f0b866; --gold-d:#e0a24e;
+  --bg:#070b18; --card:rgba(18,27,48,.55); --ink:#e9eefb; --muted:#93a6c6; --line:rgba(255,255,255,.09);
+  --font:'Tajawal','Inter',system-ui,'Segoe UI',Tahoma,sans-serif;
+  --neon:0 0 8px rgba(34,211,238,.55), 0 0 22px rgba(34,211,238,.28);
+  --gbd:1px solid rgba(255,255,255,.10);
+}
+html,body{background:transparent;color:var(--ink);font-family:var(--font)}
+body{
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(34,211,238,.16), transparent 60%),
+    radial-gradient(820px 520px at 100% 0%, rgba(167,139,250,.14), transparent 55%),
+    radial-gradient(720px 620px at 50% 120%, rgba(240,184,102,.10), transparent 60%),
+    linear-gradient(180deg,#070b18,#050812);
+  background-attachment:fixed;min-height:100vh;
+}
+*{scrollbar-width:thin;scrollbar-color:rgba(34,211,238,.3) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(34,211,238,.25);border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes floatlogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* أسطح زجاجية */
+.side,.top,.panel,.kpi,.gcard,.card,.tablewrap,.lg-card,.modalcard,.notifpanel,.statline .s,.connbar,.searchbox,.search{
+  background:var(--card)!important;backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:var(--gbd)!important;
+}
+.app,.main,.content{background:transparent!important}
+
+/* الشريط الجانبي */
+.side{box-shadow:0 0 40px rgba(0,0,0,.45),inset -1px 0 0 rgba(34,211,238,.14)!important;border-radius:0 22px 22px 0!important}
+.brandrow .t{color:var(--ink)!important;text-shadow:0 0 12px rgba(34,211,238,.25)}
+.brandrow img,.lg-ring img,.lg-wm{filter:drop-shadow(0 0 10px rgba(34,211,238,.55))}
+.nav a{color:var(--muted)!important;border-radius:12px;transition:all .25s ease}
+.nav a:hover{color:var(--ink)!important;background:rgba(34,211,238,.08)!important;transform:translateX(-3px)}
+.nav a.active{color:#fff!important;background:linear-gradient(90deg,rgba(34,211,238,.22),rgba(34,211,238,.04))!important;box-shadow:inset 2px 0 0 var(--green-l),0 0 18px rgba(34,211,238,.18)}
+.nav a.active svg{filter:drop-shadow(0 0 6px rgba(34,211,238,.85))}
+.lab{color:var(--muted)!important;letter-spacing:.5px}
+.me{border-top:1px solid var(--line)!important}.nm{color:var(--ink)!important}.av{box-shadow:0 0 16px rgba(34,211,238,.45)}
+
+/* الشريط العلوي */
+.top{border-radius:16px!important;box-shadow:0 8px 30px rgba(0,0,0,.3)!important}
+.ico,.pill{color:var(--muted)}.ico:hover{color:var(--green-l);text-shadow:var(--neon)}
+
+/* العناوين بتوهّج */
+.h h2,.lg-card h1{color:#fff!important;text-shadow:var(--neon);font-weight:800}
+.h .sub,.lg-min,.mut{color:var(--muted)!important}.ph{color:var(--ink)!important;font-weight:700}
+
+/* المؤشرات KPIs */
+.kpis .kpi{border-radius:18px!important;overflow:hidden;animation:rise .5s ease both;transition:transform .3s,box-shadow .3s}
+.kpi:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 28px rgba(34,211,238,.25)!important}
+.kpi .v{color:#fff!important;text-shadow:var(--neon);font-weight:800}.kpi .l{color:var(--muted)!important}
+.kpi .ic{color:var(--green-l);filter:drop-shadow(0 0 8px rgba(34,211,238,.5))}
+.kpi.g2 .ic{color:#a78bfa;filter:drop-shadow(0 0 8px rgba(167,139,250,.5))}
+.kpi.g3 .ic{color:var(--gold);filter:drop-shadow(0 0 8px rgba(240,184,102,.5))}
+.kpi.g4 .ic{color:#f472b6;filter:drop-shadow(0 0 8px rgba(244,114,182,.5))}
+
+/* البطاقات + الإحصاءات */
+.panel,.gcard,.card{border-radius:18px!important;animation:rise .5s ease both}
+.gcard{transition:.3s}.gcard:hover{transform:translateY(-3px);box-shadow:0 0 26px rgba(34,211,238,.2)!important}
+.statline .s{border-radius:14px!important}.statline .s .v{color:#fff!important}.statline .s .si{color:var(--green-l)}
+
+/* الأزرار */
+.btnG,.lg-btn{background:linear-gradient(135deg,var(--green),var(--green-d))!important;color:#04121a!important;border:none!important;font-weight:800;box-shadow:0 0 18px rgba(34,211,238,.4);transition:.25s}
+.btnG:hover,.lg-btn:hover{box-shadow:0 0 30px rgba(34,211,238,.7);transform:translateY(-2px)}
+.btnGhost,.expbtn{background:rgba(255,255,255,.05)!important;color:var(--ink)!important;border:var(--gbd)!important;transition:.25s}
+.btnGhost:hover,.expbtn:hover{border-color:var(--green-l)!important;color:var(--green-l)!important;box-shadow:0 0 14px rgba(34,211,238,.25)}
+.iconbtn{background:rgba(255,255,255,.04)!important;border:var(--gbd)!important;color:var(--muted)!important;transition:.2s}
+.iconbtn:hover{color:var(--green-l)!important;border-color:var(--green-l)!important;box-shadow:0 0 12px rgba(34,211,238,.3)}
+.iconbtn.danger:hover{color:#ff7a6b!important;border-color:#ff7a6b!important;box-shadow:0 0 12px rgba(255,90,80,.35)}
+
+/* الحقول */
+input,select{color:var(--ink)!important}
+.searchbox,.search{border-radius:12px!important}
+.searchbox input::placeholder,.search input::placeholder{color:var(--muted)}
+.fld input,.minp,.lg-field input{background:rgba(255,255,255,.05)!important;border:var(--gbd)!important;color:var(--ink)!important}
+.fld input:focus,.minp:focus,.lg-field input:focus{border-color:var(--green-l)!important;box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+
+/* الجدول */
+table.tbl th{color:var(--muted)!important;background:transparent!important;border-bottom:1px solid var(--line)!important}
+table.tbl td{color:var(--ink);border-bottom:1px solid var(--line)!important}
+table.tbl tbody tr{transition:.2s}
+table.tbl tbody tr:hover{background:rgba(34,211,238,.06)!important;box-shadow:inset 0 0 0 1px rgba(34,211,238,.12)}
+.av2{box-shadow:0 0 12px rgba(34,211,238,.5)}
+
+/* الترقيم */
+.pgn,.pgx,.pg-btn,.pg-num{background:rgba(255,255,255,.05)!important;border:var(--gbd)!important;color:var(--ink)!important}
+.pgn.active,.pg-num.active{background:linear-gradient(135deg,var(--green),var(--green-d))!important;color:#04121a!important;border:none!important;box-shadow:0 0 14px rgba(34,211,238,.5)!important}
+
+/* الرسوم الشريطية */
+.track{background:rgba(255,255,255,.06)!important}.hbars .fill{box-shadow:0 0 12px rgba(34,211,238,.5)}
+
+/* شريط الاتصال */
+.connbar{color:var(--green-l)!important;background:rgba(34,211,238,.08)!important;border:1px solid rgba(34,211,238,.3)!important;text-shadow:0 0 6px rgba(34,211,238,.3)}
+
+/* الدخول */
+.lgp{background:transparent!important}
+.lg-card{border-radius:22px!important;box-shadow:0 0 60px rgba(34,211,238,.15),0 20px 60px rgba(0,0,0,.5)!important;animation:rise .6s ease both}
+.lg-ring{box-shadow:0 0 30px rgba(34,211,238,.5)!important;animation:floatlogo 4s ease-in-out infinite}
+.lg-field{background:rgba(255,255,255,.05)!important;border:var(--gbd)!important}.lg-ic{color:var(--green-l)!important}.lg-lbl{color:var(--muted)!important}
+
+/* المودال */
+.backdrop{backdrop-filter:blur(6px)}
+.modalcard{border-radius:20px!important;box-shadow:0 0 60px rgba(34,211,238,.15),0 30px 80px rgba(0,0,0,.6)!important;animation:rise .35s ease both}
+.modalhd,.modalft{border-color:var(--line)!important}
 </style>
 </head>
 <body>
@@ -44,39 +160,30 @@
 <!-- LOGIN -->
 <div class="lgp" id="login">
   <img class="lg-wm" src="assets/logo-white.png" alt>
-  <div class="lg-lang" style="cursor:pointer" title="Switch to English" onclick="toggleLang()"><span id="lglang"><b>ع</b> | EN</span></div>
   <div class="lg-wrap">
-    <div class="lg-card">
+    <form class="lg-card" onsubmit="signIn(event)">
       <div class="lg-top">
         <div class="lg-ring"><img src="assets/logo-white.png" alt></div>
         <h1>نظام إدارة الدورات التدريبية</h1>
         <div class="lg-min">إعداد وتطوير القادة</div>
       </div>
-      <label class="lg-lbl">اسم المستخدم</label>
-      <div class="lg-field">
-        <span class="lg-ic" data-ic="person"></span>
-        <input type="text" id="u" placeholder="أدخل اسم المستخدم" value="admin" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
+      <label class="lg-lbl">البريد الإلكتروني</label>
+      <div class="lg-field"><span class="lg-ic" data-ic="person"></span>
+        <input type="email" id="email" placeholder="you@example.com" required></div>
       <label class="lg-lbl">كلمة المرور</label>
-      <div class="lg-field">
-        <span class="lg-ic" data-ic="lock"></span>
-        <span class="lg-ic lg-eye" data-ic="eye" onclick="var p=document.getElementById('p');p.type=p.type==='password'?'text':'password'"></span>
-        <input type="password" id="p" placeholder="أدخل كلمة المرور" value="123456" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <button class="lg-btn" onclick="doLogin()"><span data-ic="login"></span> تسجيل الدخول</button>
-    </div>
+      <div class="lg-field"><span class="lg-ic" data-ic="lock"></span>
+        <input type="password" id="pass" placeholder="••••••••" required></div>
+      <button class="lg-btn" id="loginBtn" type="submit"><span data-ic="login"></span> تسجيل الدخول</button>
+      <div class="lg-err" id="loginErr" style="display:none"></div>
+    </form>
   </div>
 </div>
 
-<!-- APP SHELL -->
-<div id="appShell">
-<div class="app" id="app">
+<!-- APP -->
+<div id="appShell"><div class="app" id="app">
   <aside class="side">
-    <button class="collapse" title="طيّ / فتح القائمة" onclick="document.getElementById('app').classList.toggle('collapsed')"><span data-ic="chev"></span></button>
-    <div class="brandrow">
-      <img src="assets/logo-white.png" alt>
-      <div class="t">نظام الدورات<span>إعداد وتطوير القادة</span></div>
-    </div>
+    <button class="collapse" title="طيّ/فتح" onclick="document.getElementById('app').classList.toggle('collapsed')"><span data-ic="chev"></span></button>
+    <div class="brandrow"><img src="assets/logo-white.png" alt><div class="t">نظام الدورات<span>إعداد وتطوير القادة</span></div></div>
     <nav class="nav" id="nav">
       <a data-route="dashboard" onclick="go('dashboard')"><span data-ic="dashboard"></span> <span class="nt">لوحة التحكم</span></a>
       <div class="lab">الإدارة</div>
@@ -85,254 +192,279 @@
       <a data-route="trainers" onclick="go('trainers')"><span data-ic="trainers"></span> <span class="nt">المدرّبون</span></a>
       <a data-route="courses" onclick="go('courses')"><span data-ic="courses"></span> <span class="nt">الدورات</span></a>
       <div class="lab">أدوات</div>
-      <a data-route="calendar" onclick="go('calendar')"><span data-ic="calendarFull"></span> <span class="nt">التقويم</span></a>
+      <a data-route="calendar" onclick="go('calendar')"><span data-ic="calendarFull"></span> <span class="nt">التقويم والانعقادات</span></a>
       <a data-route="reports" onclick="go('reports')"><span data-ic="chart"></span> <span class="nt">التقارير</span></a>
       <a data-route="printouts" onclick="go('printouts')"><span data-ic="printouts"></span> <span class="nt">المطبوعات</span></a>
       <a data-route="lookups" onclick="go('lookups')"><span data-ic="layers"></span> <span class="nt">القوائم والتصنيفات</span></a>
       <a data-route="search" onclick="go('search')"><span data-ic="search"></span> <span class="nt">البحث الشامل</span></a>
-      <a data-route="users" onclick="go('users')"><span data-ic="users"></span> <span class="nt">المستخدمون والصلاحيات</span></a>
+      <a data-route="users" onclick="go('users')"><span data-ic="users"></span> <span class="nt">المستخدمون</span></a>
       <a data-route="settings" onclick="go('settings')"><span data-ic="settings"></span> <span class="nt">الإعدادات</span></a>
     </nav>
-    <div class="me">
-      <div class="av"></div>
-      <div class="nm">Baker Tarabin<span>مدير النظام</span></div>
-      <span style="margin-inline-start:auto;cursor:pointer;color:#9fb3a8;display:flex" title="تسجيل الخروج" onclick="logout()"><span data-ic="login"></span></span>
-    </div>
+    <div class="me"><div class="av"></div><div class="nm" id="meName">—<span id="meRole">مستخدم</span></div>
+      <span style="margin-inline-start:auto;cursor:pointer;color:#9fb3a8;display:flex" title="خروج" onclick="signOut()"><span data-ic="login"></span></span></div>
   </aside>
-
   <main class="main">
     <header class="top">
-      <div class="search" title="Ctrl+K"><span data-ic="search"></span><input placeholder="ابحث عن طالب، دورة، مدرّب..." onkeydown="if(event.key==='Enter'){go('search')}"></div>
+      <div class="search" title="بحث"><span data-ic="search"></span><input id="topSearch" placeholder="ابحث في كل النظام..." onkeydown="if(event.key==='Enter'){go('search')}"></div>
       <div class="tools">
-        <span class="pill" style="cursor:pointer" title="Switch to English" onclick="toggleLang()"><span data-ic="globe"></span><span id="pilllang"><b>ع</b> | EN</span></span>
-        <span class="ico bell" onclick="toggleNotif()"><span data-ic="bell"></span></span>
         <span class="ico" title="تبديل المظهر" onclick="toggleTheme()"><span data-ic="sun"></span></span>
-      </div>
-      <div class="notifpanel" id="notif" style="display:none;top:56px;left:14px;right:auto">
-        <div class="nh"><b>الإشعارات</b></div>
-        <div class="nlist" id="nlist"></div>
-        <div class="nfoot"><a onclick="toggleNotif()">إغلاق</a></div>
       </div>
     </header>
     <div class="content" id="content"></div>
   </main>
-</div>
-</div>
+</div></div>
 
-<script src="assets/shell.js"></script>
+<div class="backdrop" id="backdrop"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const IC={
- dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
- students:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/>',
- groups:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
- trainers:'<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
- courses:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
- printouts:'<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
- search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
- users:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
- settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
- globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>',
- bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
- sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>',
- chev:'<path d="m9 18 6-6-6-6"/>',
- x:'<path d="M18 6 6 18M6 6l12 12"/>', plus:'<path d="M12 5v14M5 12h14"/>',
- eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
- pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
- trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
- export:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
- person:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
- lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
- login:'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/>',
- calendarFull:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
- chart:'<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',
- layers:'<path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',
- cap:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
- megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
- key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 8.3-8.3 2 2-2 2 1.5 1.5-2.5 2.5-1.5-1.5-2.3 2.3"/>',
- check:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
- book:'<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'
-};
-function svg(name,size){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+(size?' width="'+size+'" height="'+size+'"':'')+'>'+(IC[name]||'')+'</svg>';}
-function paintIcons(scope){(scope||document).querySelectorAll('[data-ic]').forEach(function(e){e.innerHTML=svg(e.getAttribute('data-ic'),e.getAttribute('data-sz'));});}
-
-/* ===== Google Sheets link (ضع رابط /exec في ENDPOINT لإعادة الربط) ===== */
+/* ===== إعدادات الاتصال ===== */
 const CONFIG = {
-  ENDPOINT: 'https://script.google.com/macros/s/AKfycbyL1NHX-eSiAfCBH1GY1qNxYBvnXrRGv-MSlSDRwLWhZHJotmQss9pDIlJi-X3Zc-eBHQ/exec',
-  TOKEN:    'Passport123'  // يجب أن يطابق الرمز في Code.gs
+  SUPABASE_URL: 'https://spaxlorcosangegezkex.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_jhskGlh0tvv8eUyv5d150w_um7c5HXa'
 };
-let DB=null, liveStudents=null, studentTabName='', lastErr='';
-const FIELD={ id:'معرف الطالب', name:'الاسم', gender:'الجنس', phone:'رقم الواتساب', major:'التخصص', year:'السنة الدراسية', place:'مكان الترشيح', group:'المجموعة', lastEval:'تاريخ اخر تقييم' };
-const FORM_FIELDS=[FIELD.name,FIELD.id,FIELD.gender,FIELD.phone,FIELD.major,FIELD.year,FIELD.place,FIELD.group];
+const sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
 
-function jsonp(params){return new Promise(function(res,rej){
-  if(!CONFIG.ENDPOINT) return rej('no-endpoint');
-  var cb='__cb'+Math.random().toString(36).slice(2);
-  var s=document.createElement('script');
-  var u=new URL(CONFIG.ENDPOINT);
-  var all=Object.assign({},params,{token:CONFIG.TOKEN,callback:cb});
-  Object.keys(all).forEach(function(k){ u.searchParams.set(k, typeof all[k]==='object'?JSON.stringify(all[k]):all[k]); });
-  window[cb]=function(d){ try{delete window[cb];}catch(e){} s.remove(); res(d); };
-  s.onerror=function(){ try{delete window[cb];}catch(e){} s.remove(); rej('network'); };
-  s.src=u.toString(); document.body.appendChild(s);
-  setTimeout(function(){ if(window[cb]){ try{delete window[cb];}catch(e){} s.remove(); rej('timeout'); } },20000);
-});}
-function pickStudentTab(tabs){ return tabs.find(function(t){return t.headers.indexOf(FIELD.id)>=0 && t.headers.indexOf(FIELD.name)>=0;}) || tabs[0]; }
-function mapStudents(tab){ var H=tab.headers; var m={}; Object.keys(FIELD).forEach(function(k){ m[k]=H.indexOf(FIELD[k]); });
-  return tab.rows.map(function(r){ var o={}; Object.keys(m).forEach(function(k){ o[k]=m[k]>=0?(r[m[k]]||''):''; }); o.raw={}; H.forEach(function(h,i){ if(h) o.raw[h]=r[i]||''; }); return o; }); }
-async function loadLive(){ lastErr=''; try{ var d=await jsonp({action:'read'}); if(d&&d.ok&&d.tabs){ DB=d; var t=pickStudentTab(d.tabs); studentTabName=t.name; liveStudents=mapStudents(t); return true; } lastErr=(d&&d.error)?String(d.error):'استجابة غير متوقعة'; }catch(e){ lastErr=String(e); console.warn('live load failed:',e); } return false; }
-function isLive(){ return !!liveStudents; }
-function banner(){ return isLive()
-  ? '<div class="connbar live">'+svg('check')+' متصل بالشيت: '+studentTabName+' — '+liveStudents.length+' سجل</div>'
-  : '<div class="connbar demo">'+svg('layers')+' غير متصل بالشيت — ضع رابط /exec في CONFIG.ENDPOINT لعرض بياناتك'+(lastErr?(' (السبب: '+lastErr+')'):'')+'</div>'; }
+/* ===== الأيقونات ===== */
+const IC={dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',students:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/>',groups:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',trainers:'<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',courses:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',printouts:'<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',users:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>',chev:'<path d="m9 18 6-6-6-6"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>',plus:'<path d="M12 5v14M5 12h14"/>',eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',export:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',calendarFull:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',chart:'<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',layers:'<path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',check:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',person:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',login:'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/>',book:'<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 8.3-8.3 2 2-2 2 1.5 1.5-2.5 2.5-1.5-1.5-2.3 2.3"/>',clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',cap:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'};
+function svg(n,s){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+(s?' width="'+s+'" height="'+s+'"':'')+'>'+(IC[n]||'')+'</svg>';}
+function paint(scope){(scope||document).querySelectorAll('[data-ic]').forEach(function(e){e.innerHTML=svg(e.getAttribute('data-ic'));});}
 
-function modal(title, bodyHtml, onSave){ closeModal();
-  var wrap=document.createElement('div'); wrap.className='backdrop'; wrap.id='modalHost';
-  wrap.innerHTML='<div class="modalcard"><div class="modalhd"><b>'+title+'</b><span class="iconbtn" data-ic="x" onclick="closeModal()"></span></div><div class="modalbody">'+bodyHtml+'</div><div class="modalft">'+(onSave?'<button class="btnG" id="mSave"><span data-ic="check"></span> حفظ</button>':'')+'<button class="btnGhost" onclick="closeModal()">إغلاق</button></div></div>';
-  document.body.appendChild(wrap); paintIcons(wrap);
-  if(onSave) document.getElementById('mSave').onclick=function(){ onSave(wrap); };
-  wrap.addEventListener('mousedown',function(e){ if(e.target===wrap) closeModal(); });
-}
-function closeModal(){ var m=document.getElementById('modalHost'); if(m) m.remove(); }
-function field(name,val){ return '<label class="mlbl">'+name+'</label><input class="minp" data-f="'+name+'" value="'+String(val||'').replace(/"/g,'&quot;')+'">'; }
-function studentForm(s){ return FORM_FIELDS.map(function(f){ return field(f, s&&s.raw?s.raw[f]:''); }).join(''); }
-function collectForm(wrap){ var o={}; wrap.querySelectorAll('[data-f]').forEach(function(i){ o[i.getAttribute('data-f')]=i.value; }); return o; }
+/* ===== الحالة (ذاكرة محلية تُملأ مرّة واحدة) ===== */
+const DB = { students:[], trainers:[], courses:[], groups:[], course_runs:[], lookups:[] };
+const ui = { students:{q:'',page:1}, trainers:{q:'',page:1}, course_runs:{q:'',page:1} };
+const PAGE=20; let route='dashboard', channel=null, _rt;
 
-async function addStudent(){ if(!isLive()) return toast('غير متصل بالشيت','err');
-  modal('طالب جديد', studentForm(null), async function(wrap){ var o=collectForm(wrap);
-    try{ var d=await jsonp({action:'add',sheet:studentTabName,row:o}); if(d&&d.ok){ toast('تمت إضافة الطالب'); closeModal(); await loadLive(); go('students'); } else toast((d&&d.error)||'تعذّرت الإضافة','err'); }catch(e){ toast('خطأ في الاتصال','err'); } }); }
-async function editStudent(id){ var s=liveStudents.find(function(x){return String(x.id)===String(id);});
-  modal('تعديل بيانات الطالب', studentForm(s), async function(wrap){ var o=collectForm(wrap);
-    try{ var d=await jsonp({action:'update',sheet:studentTabName,id:id,row:o}); if(d&&d.ok){ toast('تم حفظ التعديل'); closeModal(); await loadLive(); go('students'); } else toast((d&&d.error)||'تعذّر التعديل','err'); }catch(e){ toast('خطأ في الاتصال','err'); } }); }
-async function delStudent(id){ if(!confirm('حذف هذا السجل نهائيًا من الشيت؟')) return;
-  try{ var d=await jsonp({action:'delete',sheet:studentTabName,id:id}); if(d&&d.ok){ toast('تم الحذف'); await loadLive(); go('students'); } else toast((d&&d.error)||'تعذّر الحذف','err'); }catch(e){ toast('خطأ في الاتصال','err'); } }
-function viewStudent(id){ var s=liveStudents.find(function(x){return String(x.id)===String(id);}); if(!s) return;
-  var rows=Object.keys(s.raw).filter(function(k){return String(s.raw[k]).trim()!=='';}).map(function(k){return '<tr><td style="color:var(--muted);white-space:nowrap">'+k+'</td><td>'+s.raw[k]+'</td></tr>';}).join('');
-  modal('بطاقة الطالب — '+(s.name||''), '<table class="tbl">'+(rows||'<tr><td>لا توجد بيانات</td></tr>')+'</table>'); }
-function filterStudents(q){ q=(q||'').trim(); document.querySelectorAll('#stuTable tbody tr').forEach(function(tr){ tr.style.display = tr.getAttribute('data-k').indexOf(q)>=0?'':'none'; }); }
-function exportStudents(){ if(!isLive()) return; var t=DB.tabs.find(function(x){return x.name===studentTabName;});
-  var csv=[t.headers].concat(t.rows).map(function(r){return r.map(function(c){return '"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
-  var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'})); a.download=studentTabName+'.csv'; a.click(); }
+/* ===== تعريف الكيانات للنماذج CRUD ===== */
+const ENT = {
+  students:{ table:'students', title:'طالب', fields:[['name','الاسم','text',1],['id','المعرّف','text',1],['gender','الجنس','text'],['phone','رقم الواتساب','text'],['major','التخصص','text'],['year','السنة الدراسية','text'],['place','مكان الترشيح','text'],['group','المجموعة','text'],['last_eval','تاريخ آخر تقييم','date']], textPk:true },
+  trainers:{ table:'trainers', title:'مدرّب', fields:[['name','الاسم','text',1],['specialization','التخصص','text'],['phone','الهاتف','text'],['place','المكان','text'],['can_travel','يمكنه السفر','bool'],['hourly_wage','أجر الساعة','number'],['trained_before','تدرّب معنا','bool'],['bank','البنك','text']] },
+  courses:{ table:'courses', title:'دورة', fields:[['name','اسم الدورة','text',1],['code','الرمز','text'],['duration_days','المدة (أيام)','number'],['session_hours','ساعات الجلسة','number'],['pass_grade','نجاح الدرجة %','number'],['pass_attendance','نسبة الحضور %','number']] },
+  groups:{ table:'groups', title:'مجموعة', fields:[['name','اسم المجموعة','text',1],['course','الدورة المرتبطة','text'],['status','الحالة','text']] },
+  course_runs:{ table:'course_runs', title:'انعقاد', fields:[['course','الدورة','text',1],['trainer','المدرّب','text'],['start_date','تاريخ البداية','date'],['end_date','تاريخ النهاية','date'],['participants','عدد المشاركين','number'],['status','الحالة','text']] },
+  lookups:{ table:'lookups', title:'عنصر', fields:[['category','التصنيف','text',1],['value','القيمة','text',1]] }
+};
 
-/* ---------- helpers ---------- */
-function initials(n){ return String(n||'').split(' ').slice(0,2).map(function(w){return w[0];}).join(''); }
-function badge(t,s){ return '<span class="badge" style="'+s+'">'+t+'</span>'; }
-function statusBadge(t){ return badge(t,'background:rgba(28,114,147,.12);color:#1c7293'); }
-function stat(ic,v,l,g){ return '<div class="s'+(g?' g':'')+'"><div class="si">'+svg(ic,18)+'</div><div><div class="v">'+v+'</div><div class="l">'+l+'</div></div></div>'; }
-function pageHead(t,sub,actions){ return '<div class="h"><div><h2>'+t+'</h2><div class="sub">'+sub+'</div></div>'+(actions||'')+'</div>'; }
-function emptyState(msg){ return '<div class="panel"><div class="empty">'+svg('layers')+'<div style="margin-top:12px;font-size:.9rem">'+(msg||'لا توجد بيانات لعرضها')+'</div></div></div>'; }
-
-/* ---------- pages (empty until connected to the sheet) ---------- */
-function pDashboard(){
-  var totalStu = isLive()?liveStudents.length:0;
-  var kpis='<div class="kpis">'+
-    '<div class="kpi g1 klink" onclick="go(\'students\')"><div class="kr"><div class="ic">'+svg('students',20)+'</div></div><div class="v">'+totalStu+'</div><div class="l">إجمالي الطلاب</div><div class="spark"></div></div>'+
-    '<div class="kpi g2 klink" onclick="go(\'courses\')"><div class="kr"><div class="ic">'+svg('courses',20)+'</div></div><div class="v">0</div><div class="l">دورات نشطة</div><div class="spark"></div></div>'+
-    '<div class="kpi g3 klink" onclick="go(\'trainers\')"><div class="kr"><div class="ic">'+svg('trainers',20)+'</div></div><div class="v">0</div><div class="l">المدرّبون</div><div class="spark"></div></div>'+
-    '<div class="kpi g4 klink"><div class="kr"><div class="ic">'+svg('chart',20)+'</div></div><div class="v">—</div><div class="l">نسبة النجاح العامة</div><div class="spark"></div></div></div>';
-  return pageHead('لوحة التحكم','نظرة عامة على النظام')+kpis+emptyState('لا توجد بيانات لعرضها — اربط الشيت لعرض بياناتك الحقيقية');
+/* ===== المصادقة ===== */
+document.addEventListener('DOMContentLoaded', async function(){
+  paint(document);
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session) enterApp(session); else showLogin();
+  sb.auth.onAuthStateChange(function(_e,s){ if(!s) showLogin(); });
+});
+async function signIn(ev){
+  ev.preventDefault();
+  const b=document.getElementById('loginBtn'), er=document.getElementById('loginErr');
+  er.style.display='none'; b.disabled=true;
+  const { data, error } = await sb.auth.signInWithPassword({ email:document.getElementById('email').value.trim(), password:document.getElementById('pass').value });
+  b.disabled=false;
+  if(error){ er.textContent='فشل الدخول: '+error.message; er.style.display='block'; return; }
+  enterApp(data.session);
 }
-function pStudents(){
-  if(isLive()){
-    var L=liveStudents;
-    var fem=L.filter(function(s){return String(s.gender).indexOf('أنث')>=0;}).length;
-    var groupsN=(new Set(L.map(function(s){return s.group;}).filter(Boolean))).size;
-    var evald=L.filter(function(s){return String(s.lastEval).trim()!=='';}).length;
-    function esc(v){return String(v||'').replace(/"/g,'&quot;');}
-    var rows=L.map(function(s){
-      var key=[s.name,s.id,s.major,s.group,s.year,s.place].join(' ').toLowerCase();
-      var a='<div class="rowacts"><span class="iconbtn" title="عرض" onclick="viewStudent(\''+esc(s.id)+'\')"><span data-ic="eye"></span></span><span class="iconbtn" title="تعديل" onclick="editStudent(\''+esc(s.id)+'\')"><span data-ic="pen"></span></span><span class="iconbtn danger" title="حذف" onclick="delStudent(\''+esc(s.id)+'\')"><span data-ic="trash"></span></span></div>';
-      return '<tr data-k="'+esc(key)+'"><td><div class="cellname"><span class="av2">'+initials(s.name||'؟')+'</span>'+(s.name||'')+'</div></td><td>'+s.id+'</td><td>'+(s.gender||'')+'</td><td><bdi dir="ltr">'+(s.phone||'')+'</bdi></td><td>'+(s.major||'')+'</td><td>'+(s.year||'')+'</td><td>'+(s.place||'—')+'</td><td>'+(s.group||'')+'</td><td>'+(s.lastEval||'—')+'</td><td>'+a+'</td></tr>';
-    }).join('');
-    var head=['الطالب','المعرّف','الجنس','رقم الواتساب','التخصص','السنة','مكان الترشيح','المجموعة','آخر تقييم','إجراءات'];
-    return pageHead('الطلاب','قاعدة بيانات الطلاب — مرتبطة مباشرةً بـ Google Sheets','<button class="btnG" onclick="addStudent()">'+svg('plus',16)+' طالب جديد</button>')+
-      '<div class="statline">'+stat('students',L.length,'إجمالي السجلات')+stat('person',fem,'إناث')+stat('groups',groupsN,'المجموعات',true)+stat('check',evald,'لديهم تقييم')+'</div>'+
-      '<div class="toolbar"><div class="searchbox">'+svg('search',16)+'<input placeholder="بحث في الطلاب..." oninput="filterStudents(this.value.toLowerCase())"></div><button class="expbtn" onclick="exportStudents()">'+svg('export',15)+' تصدير</button></div>'+
-      '<div class="tablewrap"><div class="tablescroll"><table class="tbl" id="stuTable"><thead><tr>'+head.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>'+rows+'</tbody></table></div></div>';
-  }
-  return pageHead('الطلاب','إدارة بيانات الطلاب وتنظيمهم ضمن المجموعات')+
-    '<div class="statline">'+stat('students','0','إجمالي الطلاب')+stat('person','0','إناث')+stat('groups','0','المجموعات',true)+stat('check','0','لديهم تقييم')+'</div>'+
-    emptyState('لا يوجد طلاب — اربط الشيت لعرض البيانات');
-}
-function pTrainers(){
-  return pageHead('المدرّبون','إدارة بيانات المدرّبين وأجورهم')+
-    '<div class="statline">'+stat('trainers','0','إجمالي المدرّبين')+stat('cap','0','يمكنهم السفر')+stat('check','0','دربوا معنا',true)+'</div>'+
-    emptyState('لا توجد بيانات للمدرّبين');
-}
-function pCourses(){
-  return pageHead('الدورات','عرّف الدورة مرة واحدة، ثم أنشئ لها انعقادات متعددة')+
-    '<div class="statline">'+stat('courses','0','دورات معرّفة')+stat('book','0','انعقادات جارية')+stat('check','0','انعقادات منتهية',true)+'</div>'+
-    emptyState('لا توجد دورات معرّفة');
-}
-function pGroups(){
-  if(isLive()){
-    var map={}; liveStudents.forEach(function(s){ var g=s.group||'(بدون مجموعة)'; map[g]=(map[g]||0)+1; });
-    var keys=Object.keys(map).sort();
-    if(!keys.length) return pageHead('المجموعات','المجموعات مشتقّة من عمود «المجموعة» في الشيت','')+emptyState('لا توجد مجموعات');
-    var cards='<div class="grid3">'+keys.map(function(g){return '<div class="panel gcard"><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--green)">'+svg('groups',20)+'</span><b style="flex:1">'+g+'</b>'+statusBadge('نشطة')+'</div><div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:10px;margin-top:10px"><span style="font-size:.82rem;color:var(--muted)">عدد الطلاب</span><b style="color:var(--green);font-size:1.1rem">'+map[g]+'</b></div></div>';}).join('')+'</div>';
-    return pageHead('المجموعات','المجموعات مشتقّة مباشرةً من عمود «المجموعة» في الشيت','')+
-      '<div class="statline">'+stat('groups',keys.length,'عدد المجموعات')+stat('students',liveStudents.length,'إجمالي الطلاب',true)+'</div>'+cards;
-  }
-  return pageHead('المجموعات','تنظيم الطلاب في دفعات ومجموعات تدريبية')+
-    '<div class="statline">'+stat('groups','0','إجمالي المجموعات')+stat('students','0','إجمالي الطلاب',true)+'</div>'+
-    emptyState('لا توجد مجموعات');
-}
-function pCalendar(){
-  var days=['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
-  var cells='';for(var d=1;d<=30;d++){cells+='<div style="min-height:74px;border:1px solid var(--line);border-radius:10px;padding:6px;background:var(--card)"><div style="font-size:.78rem;color:var(--muted)">'+d+'</div></div>';}
-  return pageHead('التقويم','جدول الانعقادات والجلسات التدريبية')+
-    '<div class="panel"><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px">'+days.map(function(x){return '<div style="text-align:center;font-size:.76rem;font-weight:700;color:var(--muted)">'+x+'</div>';}).join('')+'</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">'+cells+'</div></div>';
-}
-function pReports(){
-  return pageHead('التقارير','مؤشرات الأداء ومعدلات النجاح حسب الدورة')+
-    '<div class="statline">'+stat('cap','0','متدرّب مكتمل')+stat('check','0','متوسط النجاح',true)+stat('book','0','ساعة تدريبية')+'</div>'+
-    emptyState('لا توجد بيانات لإنشاء التقارير');
-}
-function pUsers(){
-  return pageHead('المستخدمون والصلاحيات','إدارة حسابات المستخدمين وأدوارهم')+
-    '<div class="statline">'+stat('users','0','المستخدمون')+stat('key','0','أدوار')+stat('check','0','حسابات نشطة',true)+'</div>'+
-    emptyState('لا يوجد مستخدمون');
-}
-function pSettings(){
-  function f(l,v){ return '<div style="margin-bottom:16px"><label style="display:block;margin-bottom:6px;color:var(--muted);font-size:.82rem">'+l+'</label><input class="minp" value="'+v+'"></div>'; }
-  return pageHead('الإعدادات','إعدادات النظام العامة')+
-    '<div class="grid2"><div class="panel"><div class="ph">بيانات الجهة</div>'+f('اسم الجهة','إعداد وتطوير القادة')+f('السنة التدريبية الحالية','')+'<button class="btnG">'+svg('check',16)+' حفظ التغييرات</button></div>'+
-    '<div class="panel"><div class="ph">مصدر البيانات</div><p style="color:var(--muted);font-size:.85rem;line-height:1.9">المصدر: <bdi dir="ltr">Google Sheets</bdi><br>الحالة: '+(isLive()?'متصل':'غير متصل')+'</p></div></div>';
-}
-function pPrintouts(){ return pageHead('المطبوعات','نماذج الشهادات والإعلانات وكشوف الحضور')+'<div class="grid3">'+[['شهادة إتمام','cap'],['إعلان دورة','megaphone'],['كشف حضور','printouts'],['كشف درجات','check'],['بطاقة متدرّب','person'],['خطاب ترشيح','book']].map(function(p){return '<div class="panel" style="text-align:center;cursor:pointer" onclick="toast(\'فتح نموذج: '+p[0]+'\')"><div style="color:var(--green);margin:8px auto">'+svg(p[1],34)+'</div><b>'+p[0]+'</b><div style="color:var(--muted);font-size:.78rem;margin-top:6px">اضغط للمعاينة</div></div>';}).join('')+'</div>'; }
-function pLookups(){ return pageHead('القوائم والتصنيفات','إدارة الأقسام والتخصصات وأماكن الترشيح')+'<div class="grid3">'+['الأقسام','التخصصات','أماكن الترشيح'].map(function(t){return '<div class="panel"><div class="ph">'+t+' <button class="iconbtn" style="margin-inline-start:auto">'+svg('plus',15)+'</button></div><div class="empty" style="padding:24px">لا توجد عناصر</div></div>';}).join('')+'</div>'; }
-function pSearch(){
-  return pageHead('البحث الشامل','نتائج البحث في الطلاب والدورات والمدرّبين')+
-    '<div class="panel"><div class="searchbox" style="margin-bottom:14px">'+svg('search',16)+'<input placeholder="ابحث..."></div><div class="empty">'+svg('search')+'<div style="margin-top:12px;font-size:.9rem">لا توجد نتائج</div></div></div>';
-}
-var PAGES={dashboard:pDashboard,students:pStudents,trainers:pTrainers,courses:pCourses,groups:pGroups,calendar:pCalendar,reports:pReports,users:pUsers,settings:pSettings,printouts:pPrintouts,lookups:pLookups,search:pSearch};
-
-/* ---------- router / shell ---------- */
-function go(route){
-  var fn=PAGES[route]||pDashboard;
-  var c=document.getElementById('content');
-  var withBanner=['dashboard','students','groups'].indexOf(route)>=0;
-  c.innerHTML='<div class="pg active">'+(withBanner?banner():'')+fn()+'</div>';
-  paintIcons(c);
-  document.querySelectorAll('#nav a').forEach(function(a){ a.classList.toggle('active',a.getAttribute('data-route')===route); });
-  c.scrollTop=0;
-}
-async function doLogin(){
+async function signOut(){ if(channel){sb.removeChannel(channel);channel=null;} await sb.auth.signOut(); showLogin(); }
+function showLogin(){ document.getElementById('appShell').style.display='none'; document.getElementById('login').style.display='flex'; }
+function enterApp(session){
   document.getElementById('login').style.display='none';
   document.getElementById('appShell').style.display='block';
-  go('dashboard');
-  var ok=await loadLive();
-  go('dashboard');
-  if(CONFIG.ENDPOINT) setTimeout(function(){ toast(ok?('تم الاتصال بالشيت — '+liveStudents.length+' سجل'):('تعذّر الاتصال: '+(lastErr||'غير معروف')), ok?'':'err'); },250);
+  document.getElementById('meName').childNodes[0].nodeValue = (session.user.email||'مستخدم').split('@')[0];
+  loadAll(); subscribe();
 }
-function logout(){ document.getElementById('appShell').style.display='none'; document.getElementById('login').style.display='flex'; }
-function toggleNotif(){ var n=document.getElementById('notif'); n.style.display=n.style.display==='none'?'block':'none'; }
-function toggleLang(){ var ltr=document.documentElement.getAttribute('dir')==='rtl'; if(typeof applyDir==='function') applyDir(ltr?'ltr':'rtl'); else document.documentElement.setAttribute('dir',ltr?'ltr':'rtl');
-  var lbl=ltr?'AR | <b>EN</b>':'<b>ع</b> | EN'; var p=document.getElementById('pilllang'); if(p)p.innerHTML=lbl; var l=document.getElementById('lglang'); if(l)l.innerHTML=lbl;
-  toast(ltr?'Switched to English (layout)':'تم التبديل إلى العربية'); }
 
-document.getElementById('nlist').innerHTML='<div class="empty" style="padding:26px 10px;font-size:.82rem">لا توجد إشعارات</div>';
+/* ===== تحميل كل البيانات مرّة واحدة (بالتوازي) ===== */
+async function loadAll(){
+  showSkeleton();
+  const tables = Object.keys(DB);
+  const res = await Promise.all(tables.map(function(t){ return sb.from(t).select('*'); }));
+  res.forEach(function(r,i){ DB[tables[i]] = r.data || []; });
+  go(route);
+}
+function subscribe(){
+  if(channel) return;
+  channel = sb.channel('dsi-all');
+  Object.keys(DB).forEach(function(t){
+    channel.on('postgres_changes',{event:'*',schema:'public',table:t}, function(){ clearTimeout(_rt); _rt=setTimeout(loadAll,500); });
+  });
+  channel.subscribe();
+}
 
-paintIcons(document);
+/* ===== الموجّه ===== */
+const PAGES={dashboard:pDashboard,students:pStudents,groups:pGroups,trainers:pTrainers,courses:pCourses,calendar:pCalendar,reports:pReports,printouts:pPrintouts,lookups:pLookups,search:pSearch,users:pUsers,settings:pSettings};
+function go(r){
+  route=r; const fn=PAGES[r]||pDashboard; const c=document.getElementById('content');
+  c.innerHTML='<div class="pg active">'+banner()+fn()+'</div>'; paint(c);
+  document.querySelectorAll('#nav a').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-route')===r);});
+  c.scrollTop=0;
+}
+function banner(){ return '<div class="connbar">'+svg('check')+' متصل بقاعدة البيانات (Supabase) — '+DB.students.length+' طالب · تحديث لحظي</div>'; }
+function showSkeleton(){ const c=document.getElementById('content'); if(c) c.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>'; }
+
+/* ===== أدوات ===== */
+function esc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function ini(n){return String(n||'؟').trim().split(/\s+/).slice(0,2).map(function(w){return w[0]||'';}).join('');}
+function head(t,s,a){return '<div class="h"><div><h2>'+t+'</h2><div class="sub">'+s+'</div></div>'+(a||'')+'</div>';}
+function stat(ic,v,l,g){return '<div class="s'+(g?' g':'')+'"><div class="si">'+svg(ic,18)+'</div><div><div class="v">'+v+'</div><div class="l">'+l+'</div></div></div>';}
+function emptyc(m){return '<div class="panel"><div class="empty">'+svg('layers')+'<div style="margin-top:10px">'+(m||'لا توجد بيانات')+'</div></div></div>';}
+function tagBadge(t){var c=(t==='نشطة'||t==='جارٍ'||t==='نشط')?'background:rgba(28,114,147,.12);color:#1c7293':(t==='منتهية'||t==='منتهٍ')?'background:#eef1f6;color:#6b7787':'background:rgba(212,163,115,.18);color:#b07a44';return '<span class="badge" style="'+c+'">'+esc(t)+'</span>';}
+
+/* ===== جدول عام: بحث + ترقيم محلي ===== */
+function listTable(entity, cols){
+  const st=ui[entity]; const all=DB[entity];
+  const q=st.q.toLowerCase();
+  const rows = !q ? all : all.filter(function(o){ return cols.some(function(c){ return String(o[c.k]||'').toLowerCase().indexOf(q)>=0; }); });
+  const pages=Math.max(1,Math.ceil(rows.length/PAGE)); if(st.page>pages)st.page=pages;
+  const start=(st.page-1)*PAGE; const slice=rows.slice(start,start+PAGE);
+  const thead=cols.map(function(c){return '<th>'+c.t+'</th>';}).join('')+'<th>إجراءات</th>';
+  const body = slice.length ? slice.map(function(o,i){
+    const tds=cols.map(function(c){ return '<td>'+(c.r?c.r(o):esc(o[c.k]||'—'))+'</td>'; }).join('');
+    const acts='<td><div class="rowacts"><span class="iconbtn" title="تعديل" onclick="openForm(\''+entity+'\',\''+esc(o.id)+'\')">'+svg('pen')+'</span><span class="iconbtn danger" title="حذف" onclick="delRow(\''+entity+'\',\''+esc(o.id)+'\')">'+svg('trash')+'</span></div></td>';
+    return '<tr>'+tds+acts+'</tr>';
+  }).join('') : '<tr><td colspan="'+(cols.length+1)+'" style="text-align:center;color:var(--muted);padding:34px">لا توجد نتائج</td></tr>';
+  const pager='<div class="pager2"><div class="pgi">عرض '+(rows.length?start+1:0)+'–'+Math.min(start+PAGE,rows.length)+' من '+rows.length+'</div><div class="pgb">'+
+    '<button class="pgx" '+(st.page<=1?'disabled':'')+' onclick="pg(\''+entity+'\','+(st.page-1)+')">السابق</button>'+
+    pgWin(st.page,pages).map(function(p){return p==='...'?'<span style="color:var(--muted);padding:0 4px">…</span>':'<button class="pgn'+(p===st.page?' active':'')+'" onclick="pg(\''+entity+'\','+p+')">'+p+'</button>';}).join('')+
+    '<button class="pgx" '+(st.page>=pages?'disabled':'')+' onclick="pg(\''+entity+'\','+(st.page+1)+')">التالي</button></div></div>';
+  const tb='<div class="tablewrap"><div class="tablescroll"><table class="tbl"><thead><tr>'+thead+'</tr></thead><tbody>'+body+'</tbody></table></div></div>';
+  const bar='<div class="toolbar"><div class="searchbox">'+svg('search',16)+'<input value="'+esc(st.q)+'" placeholder="بحث..." oninput="srch(\''+entity+'\',this.value)"></div></div>';
+  return bar+tb+pager;
+}
+function pgWin(cur,total){const o=[];if(total<=7){for(let i=1;i<=total;i++)o.push(i);return o;}o.push(1);let s=Math.max(2,cur-1),e=Math.min(total-1,cur+1);if(cur<=3){s=2;e=4;}if(cur>=total-2){s=total-3;e=total-1;}if(s>2)o.push('...');for(let i=s;i<=e;i++)o.push(i);if(e<total-1)o.push('...');o.push(total);return o;}
+function srch(ent,v){ui[ent].q=v.trim();ui[ent].page=1;go(route);}
+function pg(ent,p){const rows=DB[ent];ui[ent].page=p;go(route);window.scrollTo({top:0,behavior:'smooth'});}
+
+/* ===== الشاشات ===== */
+function pDashboard(){
+  const S=DB.students,T=DB.trainers,C=DB.courses,R=DB.course_runs;
+  const active=R.filter(function(r){return r.status==='جارٍ'||r.status==='قادم';}).length;
+  const kpis='<div class="kpis">'+
+    '<div class="kpi g1 klink" onclick="go(\'students\')"><div class="kr"><div class="ic">'+svg('students',20)+'</div></div><div class="v">'+S.length+'</div><div class="l">إجمالي الطلاب</div><div class="spark"></div></div>'+
+    '<div class="kpi g2 klink" onclick="go(\'courses\')"><div class="kr"><div class="ic">'+svg('courses',20)+'</div></div><div class="v">'+C.length+'</div><div class="l">الدورات</div><div class="spark"></div></div>'+
+    '<div class="kpi g3 klink" onclick="go(\'trainers\')"><div class="kr"><div class="ic">'+svg('trainers',20)+'</div></div><div class="v">'+T.length+'</div><div class="l">المدرّبون</div><div class="spark"></div></div>'+
+    '<div class="kpi g4 klink" onclick="go(\'calendar\')"><div class="kr"><div class="ic">'+svg('calendarFull',20)+'</div></div><div class="v">'+active+'</div><div class="l">انعقادات نشطة</div><div class="spark"></div></div></div>';
+  // توزيع الطلاب حسب المجموعة
+  const gmap={}; S.forEach(function(s){var g=s.group||'(بدون)';gmap[g]=(gmap[g]||0)+1;});
+  const gk=Object.keys(gmap).sort(); const gmax=Math.max(1,...gk.map(function(k){return gmap[k];}));
+  const gbars=gk.length?'<div class="hbars">'+gk.map(function(k){return '<div class="hb"><div class="nm">'+esc(k)+'</div><div class="track"><div class="fill" style="width:'+(gmap[k]/gmax*100)+'%"></div></div><div class="val">'+gmap[k]+'</div></div>';}).join('')+'</div>':'<div class="empty">لا توجد بيانات</div>';
+  // توزيع حسب التخصص (أعلى 6)
+  const mmap={}; S.forEach(function(s){if(s.major){mmap[s.major]=(mmap[s.major]||0)+1;}});
+  const mk=Object.keys(mmap).sort(function(a,b){return mmap[b]-mmap[a];}).slice(0,6); const mmax=Math.max(1,...mk.map(function(k){return mmap[k];}));
+  const mbars=mk.length?'<div class="hbars">'+mk.map(function(k){return '<div class="hb"><div class="nm">'+esc(k)+'</div><div class="track"><div class="fill" style="width:'+(mmap[k]/mmax*100)+'%;background:var(--gold)"></div></div><div class="val">'+mmap[k]+'</div></div>';}).join('')+'</div>':'<div class="empty">—</div>';
+  const grid='<div class="grid2"><div class="panel"><div class="ph">الطلاب حسب المجموعة</div>'+gbars+'</div><div class="panel"><div class="ph">أعلى التخصصات</div>'+mbars+'</div></div>';
+  return head('لوحة التحكم','نظرة عامة على النظام')+kpis+grid;
+}
+function pStudents(){
+  const cols=[{k:'name',t:'الطالب',r:function(o){return '<div class="cellname"><span class="av2">'+esc(ini(o.name))+'</span>'+esc(o.name)+'</div>';}},{k:'id',t:'المعرّف'},{k:'gender',t:'الجنس'},{k:'phone',t:'الواتساب',r:function(o){return '<bdi dir="ltr">'+esc(o.phone||'—')+'</bdi>';}},{k:'major',t:'التخصص'},{k:'year',t:'السنة'},{k:'place',t:'مكان الترشيح'},{k:'group',t:'المجموعة',r:function(o){return o.group?tagBadge(o.group):'—';}},{k:'last_eval',t:'آخر تقييم'}];
+  return head('الطلاب','إدارة بيانات الطلاب','<button class="btnG" onclick="openForm(\'students\')">'+svg('plus',16)+' طالب جديد</button>')+
+    '<div class="statline">'+stat('students',DB.students.length,'إجمالي الطلاب')+stat('groups',new Set(DB.students.map(function(s){return s.group;}).filter(Boolean)).size,'المجموعات',true)+'</div>'+listTable('students',cols);
+}
+function pTrainers(){
+  const yn=function(v){return v?tagBadge('نعم'):'<span class="badge" style="background:#eef1f6;color:#6b7787">لا</span>';};
+  const cols=[{k:'name',t:'المدرّب',r:function(o){return '<div class="cellname"><span class="av2">'+esc(ini(o.name))+'</span>'+esc(o.name)+'</div>';}},{k:'specialization',t:'التخصص'},{k:'phone',t:'الهاتف',r:function(o){return '<bdi dir="ltr">'+esc(o.phone||'—')+'</bdi>';}},{k:'place',t:'المكان'},{k:'can_travel',t:'السفر',r:function(o){return yn(o.can_travel);}},{k:'hourly_wage',t:'أجر الساعة',r:function(o){return o.hourly_wage?esc(o.hourly_wage)+' ر.س':'—';}},{k:'bank',t:'البنك'}];
+  return head('المدرّبون','إدارة بيانات المدرّبين وأجورهم','<button class="btnG" onclick="openForm(\'trainers\')">'+svg('plus',16)+' مدرّب جديد</button>')+
+    '<div class="statline">'+stat('trainers',DB.trainers.length,'إجمالي المدرّبين')+stat('cap',DB.trainers.filter(function(t){return t.can_travel;}).length,'يمكنهم السفر',true)+'</div>'+listTable('trainers',cols);
+}
+function pCourses(){
+  const cards=DB.courses.length?'<div class="stack">'+DB.courses.map(function(c){return '<div class="panel" style="margin-bottom:14px"><div class="chead" style="display:flex;align-items:center;gap:12px"><div style="color:var(--green)">'+svg('courses',22)+'</div><div style="flex:1"><div style="font-weight:800">'+esc(c.name)+'</div><span style="font-size:.76rem;color:var(--muted)">'+esc(c.code||'')+'</span></div><span class="iconbtn" onclick="openForm(\'courses\',\''+esc(c.id)+'\')">'+svg('pen')+'</span><span class="iconbtn danger" onclick="delRow(\'courses\',\''+esc(c.id)+'\')">'+svg('trash')+'</span></div><div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:12px;font-size:.82rem;color:var(--muted)"><span>المدة: <b style="color:var(--ink)">'+esc(c.duration_days||'—')+' أيام</b></span><span>ساعات الجلسة: <b style="color:var(--ink)">'+esc(c.session_hours||'—')+'</b></span><span>نجاح الدرجة: <b style="color:var(--ink)">'+esc(c.pass_grade||'—')+'٪</b></span><span>الحضور: <b style="color:var(--ink)">'+esc(c.pass_attendance||'—')+'٪</b></span></div></div>';}).join('')+'</div>':emptyc('لا توجد دورات — أضف أول دورة');
+  return head('الدورات','عرّف الدورة مرة واحدة','<button class="btnG" onclick="openForm(\'courses\')">'+svg('plus',16)+' تعريف دورة</button>')+
+    '<div class="statline">'+stat('courses',DB.courses.length,'دورات معرّفة')+'</div>'+cards;
+}
+function pGroups(){
+  const cnt={}; DB.students.forEach(function(s){var g=s.group||'';if(g)cnt[g]=(cnt[g]||0)+1;});
+  const cards=DB.groups.length?'<div class="grid3">'+DB.groups.map(function(g){return '<div class="panel gcard"><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--green)">'+svg('groups',20)+'</span><b style="flex:1">'+esc(g.name)+'</b>'+tagBadge(g.status||'نشطة')+'</div>'+(g.course?'<div style="color:var(--muted);font-size:.82rem;margin:8px 0">'+svg('book',14)+' '+esc(g.course)+'</div>':'')+'<div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:10px;margin-top:8px"><span style="font-size:.82rem;color:var(--muted)">طلاب بهذا الاسم</span><b style="color:var(--green);font-size:1.05rem">'+(cnt[g.name]||0)+'</b></div><div class="rowacts" style="margin-top:8px"><span class="iconbtn" onclick="openForm(\'groups\',\''+esc(g.id)+'\')">'+svg('pen')+'</span><span class="iconbtn danger" onclick="delRow(\'groups\',\''+esc(g.id)+'\')">'+svg('trash')+'</span></div></div>';}).join('')+'</div>':emptyc('لا توجد مجموعات معرّفة. ملاحظة: مجموعات الطلاب الحالية ('+Object.keys(cnt).sort().join('، ')+') تأتي من حقل «المجموعة» في الطلاب.');
+  return head('المجموعات','إدارة المجموعات','<button class="btnG" onclick="openForm(\'groups\')">'+svg('plus',16)+' مجموعة جديدة</button>')+
+    '<div class="statline">'+stat('groups',DB.groups.length,'مجموعات معرّفة')+stat('students',Object.keys(cnt).length,'مجموعات الطلاب',true)+'</div>'+cards;
+}
+function pCalendar(){
+  const R=DB.course_runs;
+  const list=R.length?'<div class="panel"><div class="ph">الانعقادات</div>'+R.map(function(r){return '<div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)"><span style="color:var(--green)">'+svg('calendarFull',18)+'</span><div style="flex:1"><b>'+esc(r.course||'—')+'</b><div style="font-size:.78rem;color:var(--muted)">'+esc(r.start_date||'')+(r.end_date?' ← '+esc(r.end_date):'')+(r.trainer?' · '+esc(r.trainer):'')+' · '+esc(r.participants||0)+' مشارك</div></div>'+tagBadge(r.status||'قادم')+'<span class="iconbtn" style="margin-inline-start:8px" onclick="openForm(\'course_runs\',\''+esc(r.id)+'\')">'+svg('pen')+'</span><span class="iconbtn danger" onclick="delRow(\'course_runs\',\''+esc(r.id)+'\')">'+svg('trash')+'</span></div>';}).join('')+'</div>':emptyc('لا توجد انعقادات — أضف أول انعقاد');
+  return head('التقويم والانعقادات','جدول الانعقادات التدريبية','<button class="btnG" onclick="openForm(\'course_runs\')">'+svg('plus',16)+' انعقاد جديد</button>')+
+    '<div class="statline">'+stat('calendarFull',R.length,'إجمالي الانعقادات')+stat('clock',R.filter(function(r){return r.status==='جارٍ';}).length,'جارية الآن',true)+'</div>'+list;
+}
+function pReports(){
+  const S=DB.students;
+  function dist(key,color){var m={};S.forEach(function(s){if(s[key]){m[s[key]]=(m[s[key]]||0)+1;}});var k=Object.keys(m).sort(function(a,b){return m[b]-m[a];}).slice(0,8);var mx=Math.max(1,...k.map(function(x){return m[x];}));return k.length?'<div class="hbars">'+k.map(function(x){return '<div class="hb"><div class="nm">'+esc(x)+'</div><div class="track"><div class="fill" style="width:'+(m[x]/mx*100)+'%'+(color?';background:'+color:'')+'"></div></div><div class="val">'+m[x]+'</div></div>';}).join('')+'</div>':'<div class="empty">—</div>';}
+  return head('التقارير','إحصاءات من البيانات الحقيقية','<button class="expbtn" onclick="exportCSV()">'+svg('export',15)+' تصدير الطلاب CSV</button>')+
+    '<div class="statline">'+stat('students',S.length,'إجمالي الطلاب')+stat('groups',new Set(S.map(function(s){return s.group;}).filter(Boolean)).size,'المجموعات',true)+stat('cap',S.filter(function(s){return String(s.gender).indexOf('أنث')>=0;}).length,'الإناث')+stat('person',S.filter(function(s){return s.gender==='ذكر';}).length,'الذكور')+'</div>'+
+    '<div class="grid2"><div class="panel"><div class="ph">حسب التخصص</div>'+dist('major')+'</div><div class="panel"><div class="ph">حسب السنة الدراسية</div>'+dist('year','var(--gold)')+'</div></div>'+
+    '<div class="grid2"><div class="panel"><div class="ph">حسب المجموعة</div>'+dist('group')+'</div><div class="panel"><div class="ph">حسب مكان الترشيح</div>'+dist('place','var(--gold)')+'</div></div>';
+}
+function pLookups(){
+  const cats=['الأقسام','التخصصات','أماكن الترشيح'];
+  const byCat={}; DB.lookups.forEach(function(l){(byCat[l.category]=byCat[l.category]||[]).push(l);});
+  const cards='<div class="grid3">'+cats.map(function(cat){var items=byCat[cat]||[];return '<div class="panel"><div class="ph">'+cat+' <button class="iconbtn" style="margin-inline-start:auto" onclick="openLookup(\''+cat+'\')">'+svg('plus')+'</button></div>'+(items.length?items.map(function(l){return '<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.85rem"><span style="color:var(--green-l)">'+svg('layers',15)+'</span>'+esc(l.value)+'<span class="iconbtn danger" style="margin-inline-start:auto" onclick="delRow(\'lookups\',\''+esc(l.id)+'\')">'+svg('trash')+'</span></div>';}).join(''):'<div class="empty" style="padding:18px">لا عناصر</div>')+'</div>';}).join('')+'</div>';
+  return head('القوائم والتصنيفات','إدارة الأقسام والتخصصات وأماكن الترشيح')+cards;
+}
+function pSearch(){
+  const q=(document.getElementById('topSearch')&&document.getElementById('topSearch').value||'').trim().toLowerCase();
+  if(!q) return head('البحث الشامل','اكتب في شريط البحث بالأعلى ثم Enter')+emptyc('لا يوجد بحث');
+  function find(arr,keys){return arr.filter(function(o){return keys.some(function(k){return String(o[k]||'').toLowerCase().indexOf(q)>=0;});}).slice(0,8);}
+  const st=find(DB.students,['name','id','major','group','place']),tr=find(DB.trainers,['name','specialization','phone']),co=find(DB.courses,['name','code']);
+  function blk(title,rows,icon,sub){return rows.length?'<div class="panel"><div class="ph">'+title+' ('+rows.length+')</div>'+rows.map(function(o){return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)"><span class="av2">'+esc(ini(o.name))+'</span><div style="flex:1"><b style="font-size:.86rem">'+esc(o.name)+'</b><div style="font-size:.76rem;color:var(--muted)">'+esc(sub(o))+'</div></div></div>';}).join('')+'</div>':'';}
+  const out=blk('الطلاب',st,'students',function(o){return (o.major||'')+' · '+(o.group||'');})+blk('المدرّبون',tr,'trainers',function(o){return o.specialization||'';})+blk('الدورات',co,'courses',function(o){return o.code||'';});
+  return head('البحث الشامل','نتائج: '+q,'')+(out||emptyc('لا نتائج مطابقة'));
+}
+function pPrintouts(){return head('المطبوعات','نماذج قابلة للطباعة')+'<div class="grid3">'+[['شهادة إتمام','cap'],['كشف الطلاب','students'],['كشف حضور','printouts'],['كشف درجات','check'],['بطاقة متدرّب','person'],['إعلان دورة','megaphone']].map(function(p){return '<div class="panel" style="text-align:center;cursor:pointer" onclick="window.print()"><div style="color:var(--green);margin:8px auto">'+svg(p[1],32)+'</div><b>'+p[0]+'</b><div style="color:var(--muted);font-size:.78rem;margin-top:6px">اضغط للطباعة</div></div>';}).join('')+'</div>';}
+function pUsers(){return head('المستخدمون والصلاحيات','إدارة الحسابات')+'<div class="panel"><div class="ph">إدارة المستخدمين</div><p style="color:var(--muted);font-size:.88rem;line-height:1.9">تُدار حسابات الدخول من لوحة Supabase: <b style="color:var(--ink)">Authentication ▸ Users</b> (إضافة/تعطيل/تغيير كلمة المرور). جميع المستخدمين المُصادَقين لهم صلاحية كاملة حاليًا عبر سياسات RLS — ويمكن لاحقًا تقييدها (مدير يكتب/الباقي يقرأ).</p></div>';}
+function pSettings(){return head('الإعدادات','إعدادات النظام')+'<div class="grid2"><div class="panel"><div class="ph">مصدر البيانات</div><p style="color:var(--muted);font-size:.86rem;line-height:1.9">قاعدة البيانات: <bdi dir="ltr">Supabase (PostgreSQL)</bdi><br>الحالة: <b style="color:#1c7293">متصل</b><br>السجلات: '+DB.students.length+' طالب · '+DB.trainers.length+' مدرّب · '+DB.courses.length+' دورة</p></div><div class="panel"><div class="ph">الأداء</div><p style="color:var(--muted);font-size:.86rem;line-height:1.9">جلب واحد عند الدخول ثم بحث وترقيم محلي فوري، مع تحديث لحظي بين المستخدمين.</p></div></div>';}
+
+/* ===== CRUD ===== */
+function field(f,val){
+  const [k,label,type]=f;
+  if(type==='bool') return '<div class="fld"><label>'+label+'</label><select data-f="'+k+'" style="width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-family:var(--font)"><option value="false"'+(val?'':' selected')+'>لا</option><option value="true"'+(val?' selected':'')+'>نعم</option></select></div>';
+  const it = type==='date'?'date':(type==='number'?'number':'text');
+  return '<div class="fld"><label>'+label+'</label><input type="'+it+'" data-f="'+k+'" value="'+esc(val==null?'':val)+'"></div>';
+}
+function openForm(entity,id){
+  const def=ENT[entity]; const rec = id ? DB[entity].find(function(x){return String(x.id)===String(id);}) : {};
+  window._edit={entity:entity,id:id||null};
+  const body=def.fields.map(function(f){
+    var val=rec?rec[f[0]]:''; var dis=(f[0]==='id'&&id)?true:false;
+    var h=field(f,val); if(dis)h=h.replace('<input','<input disabled');
+    return f[2]==='date'||f[0]==='major'||f[0]==='specialization'?'<div class="full">'+h+'</div>':h;
+  }).join('');
+  const bd=document.getElementById('backdrop');
+  bd.innerHTML='<form class="modalcard" onsubmit="saveForm(event)"><div class="modalhd"><b>'+(id?'تعديل ':'إضافة ')+def.title+'</b><span class="iconbtn" onclick="closeForm()">'+svg('x')+'</span></div><div class="modalbody">'+body+'</div><div class="modalft"><button class="btnG" type="submit">'+svg('check',16)+' حفظ</button><button class="btnGhost" type="button" onclick="closeForm()">إلغاء</button></div></form>';
+  bd.style.display='flex'; paint(bd);
+}
+function openLookup(cat){
+  window._edit={entity:'lookups',id:null};
+  const bd=document.getElementById('backdrop');
+  bd.innerHTML='<form class="modalcard" onsubmit="saveForm(event)"><div class="modalhd"><b>إضافة إلى: '+cat+'</b><span class="iconbtn" onclick="closeForm()">'+svg('x')+'</span></div><div class="modalbody"><input type="hidden" data-f="category" value="'+esc(cat)+'"><div class="fld full"><label>القيمة</label><input data-f="value"></div></div><div class="modalft"><button class="btnG" type="submit">'+svg('check',16)+' حفظ</button><button class="btnGhost" type="button" onclick="closeForm()">إلغاء</button></div></form>';
+  bd.style.display='flex'; paint(bd);
+}
+function closeForm(){document.getElementById('backdrop').style.display='none';document.getElementById('backdrop').innerHTML='';}
+async function saveForm(ev){
+  ev.preventDefault();
+  const {entity,id}=window._edit; const def=ENT[entity];
+  const rec={}; document.querySelectorAll('#backdrop [data-f]').forEach(function(el){
+    var k=el.getAttribute('data-f'); var v=el.value;
+    var fdef=(def.fields.find(function(f){return f[0]===k;})||[])[2];
+    if(fdef==='bool') v=(v==='true');
+    else if(fdef==='number') v=(v===''?null:Number(v));
+    else if(fdef==='date') v=(v===''?null:v);
+    else v=(v===''?(k==='name'?'':null):v);
+    rec[k]=v;
+  });
+  // للكيانات ذات المعرّف التلقائي: لا نرسل id فارغًا عند الإضافة
+  if(!def.textPk && (!id)) delete rec.id;
+  let error;
+  if(id){ ({error}=await sb.from(def.table).update(rec).eq('id',id)); }
+  else  { ({error}=await sb.from(def.table).insert([rec])); }
+  if(error){ alert('تعذّر الحفظ: '+error.message); return; }
+  closeForm(); await loadAll();
+}
+async function delRow(entity,id){
+  if(!confirm('حذف هذا العنصر نهائيًا؟')) return;
+  const {error}=await sb.from(ENT[entity].table).delete().eq('id',id);
+  if(error){ alert('تعذّر الحذف: '+error.message); return; }
+  await loadAll();
+}
+function exportCSV(){
+  const cols=['id','name','gender','phone','major','year','place','group','last_eval'];
+  const csv=[cols].concat(DB.students.map(function(s){return cols.map(function(c){return s[c]||'';});})).map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));a.download='students.csv';a.click();
+}
+function toggleTheme(){var d=!document.documentElement.classList.contains('dark');document.documentElement.classList.toggle('dark',d);try{localStorage.setItem('dsi-theme',d?'dark':'light');}catch(e){}}
+try{if(localStorage.getItem('dsi-theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}
 </script>
 </body>
 </html>
